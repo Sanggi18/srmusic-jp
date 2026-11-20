@@ -31,7 +31,7 @@ the formal dictionary-first one.
 | --- | --- | --- |
 | `readings.json` | ~236 KB | **12,364 entries**: `{kanji: hiragana}`, keys sorted by Unicode codepoint |
 | `readings_romaji.json` | ~197 KB | Same 12,364 keys, Hepburn romaji values (`{"私": "watashi"}`) |
-| `words-00.json` … `words-07.json` | ~1.7–1.9 MB each, **14.5 MB total** | **298,652 entries**: `{word: [kana, romaji]}` — the full word index (see below) |
+| `words-00.json` … `words-07.json` | ~1.8–2.0 MB each, **15.4 MB total** | **298,652 entries**: `{word: [kana, romaji]}` — the full word index (see below) |
 | `words_index.json` | ~1 KB | Manifest: which first-character codepoint range lives in which shard |
 | `words_alternates.json` | ~80 KB | 3,224 words with more than one JMdict reading: `{word: [alt_kana, …]}` (kana only, best first, max 3) |
 | `build_readings.py` | — | Reproducible build script for the kanji index (re-run gives byte-identical files) |
@@ -84,8 +84,8 @@ keys. 3,224 words have alternate readings in
 `words_alternates.json` (e.g. `明日: [あした]` — the index default
 is `あす`; `抱く: [いだく, うだく]` — default `だく`).
 
-**Why 8 shards, not one file:** the full index is 14.5 MB, over the
-12 MB single-file limit, so it is split into 8 shards of ~1.7–1.9 MB,
+**Why 8 shards, not one file:** the full index is 15.4 MB, over the
+12 MB single-file limit, so it is split into 8 shards of ~1.8–2.0 MB,
 balanced by byte size, cut only at first-character boundaries.
 `words_index.json` is the manifest:
 

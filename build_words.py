@@ -709,10 +709,18 @@ def shard_words(out):
 # Writing / verification
 # ---------------------------------------------------------------------------
 def write_json(path, data):
+    # One entry per line: `"key": [kana, romaji],` then a newline — the same
+    # style as readings.json. A single multi-MB line is slow to load/render
+    # (GitHub, editors, and any line-based reader choke on it) and useless
+    # for diffs; one entry per line costs ~1 byte per entry.
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, sort_keys=True,
-                  separators=(",", ":"))
-        f.write("\n")
+        items = sorted(data.items())
+        f.write("{\n")
+        for i, (k, v) in enumerate(items):
+            comma = "," if i < len(items) - 1 else ""
+            f.write(json.dumps(k, ensure_ascii=False) + ": "
+                    + json.dumps(v, ensure_ascii=False) + comma + "\n")
+        f.write("}\n")
 
 
 def main():
